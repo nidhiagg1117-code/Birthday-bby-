@@ -1,181 +1,738 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You ❤️</title>
+
+<title>For My Baby ❤️</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
+
 body{
-margin:0;
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#ffd6e7,#fff1f7,#ffe0ec);
-color:#54213a;
-text-align:center;
-overflow-x:hidden
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#fff0f5,#ffe0eb,#fff7fa);
+    color:#54243a;
+    text-align:center;
+    overflow-x:hidden;
 }
-.page{min-height:100vh;padding:45px 20px}
-h1{font-size:42px;margin-top:40px}
-h2{font-size:28px}
-p{font-size:18px;line-height:1.7}
-button{
-border:0;border-radius:30px;padding:15px 25px;
-background:#ff6f9f;color:white;font-size:17px;
-box-shadow:0 5px 15px #d98aa5;
-margin:10px;cursor:pointer
+
+.screen{
+    min-height:100vh;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    padding:30px 20px;
+    position:relative;
 }
+
+.screen.active{
+    display:flex;
+}
+
+h1{
+    font-size:42px;
+    margin:15px 0;
+}
+
+h2{
+    font-size:30px;
+}
+
+p{
+    font-size:18px;
+    line-height:1.7;
+}
+
+.small{
+    font-size:15px;
+    opacity:.8;
+}
+
 .card{
-background:#ffffffb8;
-backdrop-filter:blur(8px);
-padding:25px;border-radius:25px;
-max-width:600px;margin:25px auto;
-box-shadow:0 8px 30px #c77c9950
+    width:min(90%,600px);
+    padding:30px;
+    border-radius:30px;
+    background:rgba(255,255,255,.75);
+    box-shadow:0 10px 40px rgba(100,30,60,.15);
+    backdrop-filter:blur(10px);
 }
-.heart{font-size:45px;animation:beat 1s infinite}
-@keyframes beat{50%{transform:scale(1.25)}}
-.hidden{display:none}
-img{
-width:100%;max-width:330px;
-border-radius:22px;
-margin:12px;
-box-shadow:0 8px 20px #9d496555
+
+button{
+    border:none;
+    padding:15px 26px;
+    margin:10px;
+    border-radius:30px;
+    background:#f36d9a;
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+    box-shadow:0 7px 18px rgba(180,70,110,.25);
 }
-video{
-width:100%;max-width:500px;
-border-radius:20px;
-margin-top:15px
+
+button:active{
+    transform:scale(.94);
 }
-.fall{
-position:fixed;top:-20px;
-font-size:20px;animation:fall 5s linear infinite;
-pointer-events:none
+
+.heart{
+    font-size:60px;
+    animation:beat 1.1s infinite;
 }
+
+@keyframes beat{
+    50%{transform:scale(1.2);}
+}
+
+/* FLOATING HEARTS */
+.floating-heart{
+    position:absolute;
+    font-size:40px;
+    cursor:pointer;
+    animation:float 2s infinite ease-in-out;
+}
+
+@keyframes float{
+    50%{transform:translateY(-18px);}
+}
+
+/* BALLOONS */
+.balloon{
+    width:70px;
+    height:90px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin:12px;
+    cursor:pointer;
+    font-size:25px;
+    background:#ff9fbd;
+    box-shadow:0 8px 15px rgba(100,30,60,.15);
+    animation:balloonFloat 2s infinite ease-in-out;
+}
+
+@keyframes balloonFloat{
+    50%{transform:translateY(-12px);}
+}
+
+.pop{
+    animation:pop .35s forwards;
+}
+
+@keyframes pop{
+    to{
+        transform:scale(1.8);
+        opacity:0;
+    }
+}
+
+/* BOUQUET */
+.bouquet{
+    font-size:100px;
+    cursor:pointer;
+    animation:bouquetFloat 2s infinite ease-in-out;
+}
+
+@keyframes bouquetFloat{
+    50%{transform:translateY(-10px) rotate(3deg);}
+}
+
+/* CONFETTI */
+.confetti{
+    position:fixed;
+    top:-20px;
+    font-size:25px;
+    pointer-events:none;
+    animation:fall 4s linear forwards;
+}
+
 @keyframes fall{
-to{transform:translateY(110vh) rotate(360deg)}
+    to{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+/* LETTER */
+.letter{
+    text-align:left;
+    background:#fff9fc;
+    padding:25px;
+    border-radius:22px;
+    margin-top:20px;
+    min-height:180px;
+}
+
+.line{
+    display:none;
+    animation:fade .8s ease;
+}
+
+.line.show{
+    display:block;
+}
+
+@keyframes fade{
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* PHOTO MEMORY CARDS */
+.photo-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    width:min(95%,600px);
+}
+
+.photo-card{
+    height:180px;
+    border-radius:22px;
+    background:#ffd6e3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    cursor:pointer;
+    box-shadow:0 7px 20px rgba(100,30,60,.15);
+}
+
+.photo-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* FINAL */
+.final-heart{
+    font-size:90px;
+    animation:beat 1s infinite;
+}
+
+@media(max-width:500px){
+    h1{font-size:34px;}
+    h2{font-size:25px;}
+    p{font-size:17px;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="page">
+<!-- SCREEN 1 -->
+<section class="screen active" id="screen1">
 
-<div class="heart">❤️</div>
+    <div class="heart">❤️</div>
 
-<h1>Oyyyy Birthday Boy 🥹🎂</h1>
+    <h1>Hey Baby... 👀</h1>
 
-<div class="card">
-<p>
-So... aaj tumhara birthday hai 👀❤️<br>
-Aur obviously main kuch normal sa "Happy Birthday" bolke
-bhaagne wali toh hoon nahi 😭😂
-</p>
+    <div class="card">
+        <p>
+            I made something for you.<br>
+            And no, you are not allowed to skip it. 😂
+        </p>
 
-<button onclick="show('surprise')">Ek surprise hai... 👀💗</button>
-</div>
+        <button onclick="goTo(2)">
+            Okay... show me 👀
+        </button>
+    </div>
 
-<div id="surprise" class="hidden">
+</section>
 
-<div class="card">
-<h2>Happyyyy Birthdayyyy! 🎂😭❤️</h2>
 
-<p>
-Pata hai tum kitne annoying ho? 😭<br>
-Kabhi sweet, kabhi irritating,
-kabhi bilkul pagal... basically <b>full package ho tum</b> 😂❤️
-</p>
+<!-- SCREEN 2 -->
+<section class="screen" id="screen2">
 
-<p>
-But honestly... meri life mein tumhara hona
-kaafi special hai. 🥹🫶🏻
-</p>
+    <h2>First, a little challenge 😌</h2>
 
-<button onclick="show('letter')">Thoda aur dekho 🥺</button>
-</div>
+    <p>
+        Find and tap all <b>3 hearts</b> ❤️
+    </p>
 
-<div id="letter" class="hidden">
+    <div id="heartsArea"></div>
 
-<div class="card">
+    <p id="heartCounter">Hearts found: 0 / 3</p>
 
-<h2>Ek chhota sa message 💌</h2>
+</section>
 
-<p>
-I don't know future mein kya hoga,
-kitne fights honge, kitni bakchodi hogi 😭😂
-but aaj ke din bas itna kehna hai...
-</p>
 
-<p>
-<b>
-Thank you for being a part of my life. ❤️
-</b>
-</p>
+<!-- SCREEN 3 -->
+<section class="screen" id="screen3">
 
-<p>
-Tum haste raho, khush raho,
-apne dreams achieve karo,
-aur haan... mujhe tang karna kabhi band mat karna
-because apparently mujhe aadat ho gayi hai tumhari 😭😂❤️
-</p>
+    <h2>Okayyy... you made it 😂❤️</h2>
 
-<p>
-<b>Happy Birthday, idiot. 🫶🏻</b>
-</p>
+    <p>
+        But we're not done yet.
+    </p>
 
-<button onclick="show('memories')">Our memories 📸</button>
+    <button onclick="goTo(4)">
+        Continue →
+    </button>
 
-</div>
-</div>
+</section>
 
-<div id="memories" class="hidden">
 
-<div class="card">
+<!-- SCREEN 4 -->
+<section class="screen" id="screen4">
 
-<h2>Hamari thodi si duniya 🥹❤️</h2>
+    <h2>Now pop the balloons 🎈</h2>
 
-<p>Photos yahan aayengi 👇</p>
+    <p>Tap them one by one...</p>
 
-<img src="photo1.jpg" alt="Our memory">
-<img src="photo2.jpg" alt="Our memory">
-<img src="photo3.jpg" alt="Our memory">
+    <div id="balloons">
 
-<h2>And this one... 🎥</h2>
+        <div class="balloon" onclick="popBalloon(this)">🎈</div>
+        <div class="balloon" onclick="popBalloon(this)">🎈</div>
+        <div class="balloon" onclick="popBalloon(this)">🎈</div>
+        <div class="balloon" onclick="popBalloon(this)">🎈</div>
+        <div class="balloon" onclick="popBalloon(this)">🎈</div>
 
-<video controls>
-<source src="video.mp4" type="video/mp4">
-Your browser does not support video.
-</video>
+    </div>
 
-<p>
-Bas itna hi tha mera chhota sa pagal sa surprise. 😭❤️
-</p>
+    <p id="balloonMessage"></p>
 
-<h2>Love youuu 🫶🏻</h2>
+</section>
 
-</div>
-</div>
 
-</div>
-</div>
+<!-- SCREEN 5 -->
+<section class="screen" id="screen5">
+
+    <h2>Wait... there's something here 💐</h2>
+
+    <p>Tap the bouquet.</p>
+
+    <div class="bouquet" onclick="bouquetReveal()">
+        💐
+    </div>
+
+    <p id="bouquetText"></p>
+
+</section>
+
+
+<!-- SCREEN 6 -->
+<section class="screen" id="screen6">
+
+    <div class="heart">❤️</div>
+
+    <h1>HAPPY BIRTHDAY</h1>
+
+    <h1>MY BABY 🎂</h1>
+
+    <p>
+        Today is officially your day. 🥹
+    </p>
+
+    <button onclick="goTo(7)">
+        I have something to tell you 💌
+    </button>
+
+</section>
+
+
+<!-- SCREEN 7 -->
+<section class="screen" id="screen7">
+
+    <h2>A little message from Nidhi 💌</h2>
+
+    <div class="card">
+
+        <div class="letter">
+
+            <p class="line show">
+                Pata hai, main shayad ye sab itna bolti nahi hoon...
+            </p>
+
+            <p class="line">
+                but you are genuinely very special to me. ❤️
+            </p>
+
+            <p class="line">
+                You have become such an important part of my life,
+                and honestly, I don't even know kab tum meri life ka
+                itna important part ban gaye.
+            </p>
+
+            <p class="line">
+                I love you like anything. 🥹❤️
+            </p>
+
+            <p class="line">
+                And it's not just about the big things.
+                It's all those chhoti-chhoti things,
+                the little moments and memories that somehow
+                mean so much to me.
+            </p>
+
+            <p class="line">
+                Tumhare saath meri bohot saari memories hain —
+                kuch cute, kuch stupid aur kuch bilkul pagal 😂
+            </p>
+
+            <p class="line">
+                But honestly, I wouldn't want to change any of them.
+            </p>
+
+            <p class="line">
+                I just want you to be happy, keep growing,
+                achieve everything you want and always have
+                reasons to smile. ❤️
+            </p>
+
+            <p class="line">
+                And haan, life mein kitni bhi bakchodi ho,
+                fights ho ya main tumhe unnecessarily irritate karun 😭😂
+                just know that you will always be very special to me.
+            </p>
+
+            <p class="line">
+                Thank you for being a part of my life, Baby. ❤️
+            </p>
+
+            <p class="line">
+                Happy Birthday once again.
+                I hope this year gives you everything
+                you have been wishing for.
+            </p>
+
+            <p class="line">
+                <b>Love, Nidhi ❤️</b>
+            </p>
+
+        </div>
+
+        <button onclick="nextLine()" id="letterButton">
+            Keep reading →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- SCREEN 8 -->
+<section class="screen" id="screen8">
+
+    <h2>Now... our little memories 📸</h2>
+
+    <p>
+        Tap each card to reveal a memory. ❤️
+    </p>
+
+    <div class="photo-grid">
+
+        <div class="photo-card" onclick="openPhoto(this,'photo1.jpg')">
+            👀<br>Tap me
+        </div>
+
+        <div class="photo-card" onclick="openPhoto(this,'photo2.jpg')">
+            👀<br>Tap me
+        </div>
+
+        <div class="photo-card" onclick="openPhoto(this,'photo3.jpg')">
+            👀<br>Tap me
+        </div>
+
+        <div class="photo-card" onclick="openPhoto(this,'photo4.jpg')">
+            👀<br>Tap me
+        </div>
+
+        <div class="photo-card" onclick="openPhoto(this,'photo5.jpg')">
+            👀<br>Tap me
+        </div>
+
+        <div class="photo-card" onclick="openPhoto(this,'photo6.jpg')">
+            👀<br>Tap me
+        </div>
+
+    </div>
+
+    <p id="photoCount">
+        Memories opened: 0 / 6
+    </p>
+
+    <button id="musicButton" style="display:none" onclick="goTo(9)">
+        One last thing... 🎵
+    </button>
+
+</section>
+
+
+<!-- SCREEN 9 -->
+<section class="screen" id="screen9">
+
+    <div class="card">
+
+        <h2>One last little surprise... 🎵</h2>
+
+        <p>
+            Put your headphones on. ❤️
+        </p>
+
+        <p class="small">
+            Your song: <b>You Are My Shoniya</b>
+        </p>
+
+        <audio id="song" controls>
+            <source src="song.mp3" type="audio/mpeg">
+        </audio>
+
+        <br>
+
+        <button onclick="playSong()">
+            Play our song ❤️
+        </button>
+
+        <button onclick="goTo(10)">
+            One last thing →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- SCREEN 10 -->
+<section class="screen" id="screen10">
+
+    <div class="final-heart">❤️</div>
+
+    <h1>That's it, Baby.</h1>
+
+    <div class="card">
+
+        <p>
+            No more surprises...
+        </p>
+
+        <p>
+            At least for today. 😌😂
+        </p>
+
+        <p>
+            I just wanted to make something that reminds you
+            of how special you are to me.
+        </p>
+
+        <h2>Happy Birthday ❤️🎂</h2>
+
+        <p>
+            <b>Love, Nidhi 🫶🏻</b>
+        </p>
+
+    </div>
+
+</section>
+
 
 <script>
-function show(id){
-document.getElementById(id).classList.remove("hidden");
-window.scrollTo({
-top:document.getElementById(id).offsetTop-20,
-behavior:"smooth"
-});
+
+/* CHANGE SCREEN */
+
+function goTo(number){
+
+    document.querySelectorAll(".screen").forEach(function(screen){
+        screen.classList.remove("active");
+    });
+
+    document.getElementById("screen"+number).classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+    if(number === 6){
+        confetti();
+    }
 }
 
-for(let i=0;i<25;i++){
-let h=document.createElement("div");
-h.className="fall";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"%";
-h.style.animationDelay=Math.random()*5+"s";
-document.body.appendChild(h);
+
+/* HEART GAME */
+
+let heartsFound = 0;
+
+function createHearts(){
+
+    const area = document.getElementById("heartsArea");
+
+    for(let i=0;i<3;i++){
+
+        let heart = document.createElement("div");
+
+        heart.className="floating-heart";
+        heart.innerHTML="❤️";
+
+        heart.style.left=(15 + Math.random()*70)+"%";
+        heart.style.top=(25 + Math.random()*45)+"%";
+
+        heart.onclick=function(){
+
+            heart.remove();
+
+            heartsFound++;
+
+            document.getElementById("heartCounter").innerText =
+            "Hearts found: "+heartsFound+" / 3";
+
+            if(heartsFound === 3){
+
+                setTimeout(function(){
+                    goTo(3);
+                },700);
+
+            }
+
+        };
+
+        area.appendChild(heart);
+    }
 }
+
+createHearts();
+
+
+/* BALLOON GAME */
+
+let balloonsPopped=0;
+
+function popBalloon(balloon){
+
+    balloon.classList.add("pop");
+
+    balloonsPopped++;
+
+    if(balloonsPopped === 5){
+
+        document.getElementById("balloonMessage").innerHTML =
+        "POP POP! 🎉 Okayyy, you did it. ❤️";
+
+        setTimeout(function(){
+            goTo(5);
+        },1300);
+
+    }
+}
+
+
+/* BOUQUET */
+
+function bouquetReveal(){
+
+    document.getElementById("bouquetText").innerHTML =
+    "A little bouquet for my favourite person. 💐❤️";
+
+    confetti();
+
+    setTimeout(function(){
+        goTo(6);
+    },1800);
+}
+
+
+/* CONFETTI */
+
+function confetti(){
+
+    const emojis=["❤️","💗","✨","🎉","🌸","💕","🎈"];
+
+    for(let i=0;i<45;i++){
+
+        let item=document.createElement("div");
+
+        item.className="confetti";
+
+        item.innerHTML=
+        emojis[Math.floor(Math.random()*emojis.length)];
+
+        item.style.left=Math.random()*100+"%";
+
+        item.style.animationDelay=
+        Math.random()*2+"s";
+
+        document.body.appendChild(item);
+
+        setTimeout(function(){
+            item.remove();
+        },6000);
+    }
+}
+
+
+/* LETTER */
+
+let currentLine=1;
+
+function nextLine(){
+
+    const lines=document.querySelectorAll(".line");
+
+    if(currentLine < lines.length){
+
+        lines[currentLine].classList.add("show");
+
+        currentLine++;
+
+    }else{
+
+        document.getElementById("letterButton").innerText =
+        "See our memories 📸";
+
+        document.getElementById("letterButton").onclick=function(){
+            goTo(8);
+        };
+
+    }
+}
+
+
+/* PHOTOS */
+
+let photosOpened=0;
+
+function openPhoto(card,file){
+
+    if(card.dataset.opened === "yes"){
+        return;
+    }
+
+    card.dataset.opened="yes";
+
+    card.innerHTML=
+    '<img src="'+file+'" alt="Our memory">';
+
+    photosOpened++;
+
+    document.getElementById("photoCount").innerText =
+    "Memories opened: "+photosOpened+" / 6";
+
+    if(photosOpened === 6){
+
+        setTimeout(function(){
+
+            document.getElementById("musicButton").style.display="inline-block";
+
+        },700);
+
+    }
+}
+
+
+/* MUSIC */
+
+function playSong(){
+
+    const song=document.getElementById("song");
+
+    song.play();
+
+}
+
 </script>
 
 </body>
-</html>
+  </html>
